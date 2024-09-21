@@ -1,5 +1,25 @@
 import ipaddress
 
+def get_user_input():
+    """
+    Obtiene la cantidad de redes, los hosts que el usuario desea para cada red y la Subnet IP.
+    """
+    # Pedir la dirección de la subred (Subnet IP)
+    subnet_ip = input("Ingresa la Subnet IP (ej. 192.168.1.0): ")
+
+    # Pedir la cantidad de redes que el usuario quiere crear
+    num_subnets = int(input("¿Cuántas redes deseas crear? "))
+
+    # Crear un diccionario vacío para almacenar la información de las subredes
+    subnets = {}
+
+    # Iterar sobre el número de subredes y pedir la cantidad de hosts para cada una
+    for i in range(1, num_subnets + 1):
+        num_hosts = int(input(f"¿Cuántos hosts quieres para la red {i}? "))
+        subnets[i] = {'hosts': num_hosts}
+
+    return subnet_ip, subnets
+
 def order_subnet(subnets):
     """
     Ordena las subredes de menor a mayor cantidad de host disponibles.
@@ -138,14 +158,11 @@ def vlsm_calculator(net_ip, mask_number, subnets):
         print(f"Tabla para {subnet_key}:\n{table}")
 
 if __name__ == '__main__':
-    # Subredes
-    subnets = {'A': {'hosts': 25}, 'B': {'hosts': 10}, 'C': {'hosts': 50}, 'D': {'hosts': 80}}
-
-    # Dirección de la subred
-    subnet_ip = '192.168.1.0' 
+   # Obtener la Subnet IP y las subredes del usuario
+    subnet_ip, subnets = get_user_input()
 
     # Máscara de red
     mask_number = '255.255.255.0'
 
-    vlsm_calculator(subnet_ip, mask_number, subnets) 
+    vlsm_calculator(subnet_ip, mask_number, subnets)
    
